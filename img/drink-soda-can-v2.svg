@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:10;">
+    <g id="soda-can">
+        <g id="can-color">
+            <path id="can-background" d="M51,8l0,49l-38,0l0,-49" style="fill:#7ccacb;fill-rule:nonzero;" />
+            <g id="can-label">
+                <clipPath id="_clip1">
+                    <path d="M13,57c0,0 0.078,-35.532 0,-40.644c-0.01,-0.662 1.304,-0.298 2,-0.298c3.532,0 6.442,2.686 6.796,6.124c0.534,-0.266 1.136,-0.416 1.772,-0.416c0.895,0 1.721,0.296 2.386,0.796c1.145,-2.17 3.424,-3.65 6.046,-3.65c2.95,0 5.466,1.873 6.421,4.494c1.323,-1.453 3.23,-2.367 5.349,-2.367c3.99,0 7.23,3.24 7.23,7.231l0,28.73l-0.41,0l-1.28,1.62c-0.614,0.739 -1.037,1.619 -1.23,2.56l-0.15,0.82l-31.85,0l-0.15,-0.82c-0.193,-0.941 -0.616,-1.821 -1.23,-2.56l-1.29,-1.62l-0.41,0Z" />
+                </clipPath>
+                <g clip-path="url(#_clip1)">
+                    <path d="M47.93,62l-31.85,0l-0.15,-0.82c-0.193,-0.941 -0.616,-1.821 -1.23,-2.56l-1.29,-1.62l-0.41,0l0,-49l38,0l0,49l-0.41,0l-1.28,1.62c-0.614,0.739 -1.037,1.619 -1.23,2.56l-0.15,0.82Z" style="fill:#226e6f;fill-rule:nonzero;" />
+                </g>
+            </g>
+            <g id="can-bblbtm">
+                <circle id="bbl9" cx="33.347" cy="36.794" r="1.051" style="fill:#f58787;" />
+                <circle id="bbl8" cx="44.627" cy="54.72" r="1.81" style="fill:#f58787;" />
+                <circle id="bbl7" cx="24.27" cy="57.879" r="1.35" style="fill:#f58787;" />
+                <circle id="bbl6" cx="25.07" cy="51.456" r="1.051" style="fill:#f58787;" />
+                <circle id="bbl5" cx="23.075" cy="38.761" r="3.761" style="fill:#f58787;" />
+                <circle id="bbl4" cx="28.768" cy="46.547" r="1.81" style="fill:#f58787;" />
+                <circle id="bbl3" cx="35.6" cy="54.76" r="2.253" style="fill:#f58787;" />
+                <circle id="bbl2" cx="34.94" cy="44.114" r="1.593" style="fill:#f58787;" />
+                <circle id="bbl0" cx="38.935" cy="30.407" r="1.593" style="fill:#f58787;" />
+                <circle id="bbl1" cx="41.635" cy="43.702" r="2.424" style="fill:#f58787;" />
+            </g>
+            <g id="can-higlight" opacity="0.47">
+                <path d="M41,57l9.59,0l-1.28,1.62c-0.614,0.739 -1.037,1.619 -1.23,2.56l-0.15,0.82l-6.93,0" style="fill:#5ca1a1;fill-rule:nonzero;" />
+                <rect x="41" y="8" width="10" height="49" style="fill:#5ca1a1;" />
+            </g>
+            <g id="can-toprim">
+                <path d="M42,8l-28.41,0l1.59,-1.69c0.93,-0.943 1.542,-2.153 1.75,-3.46l0.13,-0.85l24.94,0" style="fill:#70bbbb;fill-rule:nonzero;" />
+                <path d="M41,2l5.94,0l0.13,0.85c0.208,1.307 0.82,2.517 1.75,3.46l1.59,1.69l-9.41,0" style="fill:#5ca1a1;fill-rule:nonzero;" />
+            </g>
+        </g>
+        <g id="can-bbltop">
+            <circle cx="24.253" cy="14.119" r="1.869" style="fill:#226e6f;" />
+            <circle cx="34.125" cy="10.125" r="2.125" style="fill:#226e6f;" />
+            <circle cx="37.125" cy="16.434" r="0.875" style="fill:#226e6f;" />
+        </g>
+        <g id="can-color1" serif:id="can-color"></g>
+        <g id="can-outline">
+            <path d="M15,62l34,0" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;" />
+            <path d="M13,57l38,0" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;stroke-linecap:butt;" />
+            <path d="M48,62c0,-3 3,-5 3,-5l0,-49c0,0 -4,-2 -4,-6" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:round;" />
+            <path d="M17,2c0,4 -4,6 -4,6l0,49c0,0 3,2 3,5" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:round;" />
+            <path d="M51,8l-10,0" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;" />
+            <path d="M38,8l-25,0" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;" />
+            <path d="M48,2l-32,0" style="fill:none;fill-rule:nonzero;stroke:#544f4b;stroke-width:2px;" />
+        </g>
+    </g>
+</svg>
