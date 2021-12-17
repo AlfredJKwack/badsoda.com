@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>It's Friday</title>
+  </head>
+  <body>
+    You should really turn on Javascript.  
+    <script type="text/javascript">
+      const random_video_array = ['Friday-1.mp4', 'Friday-2.mp4', 'Friday-3.mp4', 'Friday-4.mp4', 'Friday-5.mp4', 'Friday-6.mp4', 'Friday-7.mp4'];
+      function getRandomVideo(vidAr, path = "video/") {
+          const index = Math.floor(Math.random() * vidAr.length);
+          const vid = vidAr[index];
+          window.location.href = path + vid;
+      }
+      getRandomVideo(random_video_array, 'video/');
+  </script>    
+  </body>
+</html>
