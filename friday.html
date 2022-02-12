@@ -18,8 +18,6 @@
     <meta name='twitter:description' content='Shows an energizing meme on Friday because you need it.' />
     <meta property='og:description' content='Shows an energizing meme on Friday because you need it.' />
 
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/plugin/weekOfYear.js"></script>
     <script type="text/javascript">
       /*
       Where are your video files located and what are their filenames.
@@ -27,20 +25,30 @@
       const vidDir = 'video/';
       const vidFiles = ['Friday-1.mp4', 'Friday-2.mp4', 'Friday-3.mp4', 'Friday-4.mp4', 'Friday-5.mp4', 'Friday-6.mp4', 'Friday-7.mp4'];
 
-      /*
-      Make Day.js aware of the WeekOfYear plugin which adds .week() API
+      /**
+       * Gets the week number for a given date. Defaults to today.
+       * WARNING: 
+       * Is not standards compliant at all and a new week can start mid-week
+       * It's consistent for the whole year. If that's good enough for you, great.
+       * If you need precision, consider Day.js (and weekOfYear plugin) or Luxon.
+       * @param  {Date}   dtDate A javascript date object. Defaults to today.
+       * @return {int}           A week number between 1 and 53
        */
-      dayjs.extend(window.dayjs_plugin_weekOfYear);
+      function getWeekNum( dtDate = new Date()){
+        const oneJan = new Date(dtDate.getFullYear(),0,1);
+        const numberOfDays = Math.floor((dtDate - oneJan) / (24 * 60 * 60 * 1000));
+        return Math.ceil(( dtDate.getDay() + 1 + numberOfDays) / 7); //this is bad I know
+      }
 
       /*
       Pick one of the videos in the array based on the current week number.
        */
-      let vidPickedHref = vidDir + vidFiles[ dayjs().week() % vidFiles.length ];
+      let vidPickedHref = vidDir + vidFiles[ getWeekNum() % vidFiles.length ];
 
       /*
       Move to video but only if Friday today.
        */
-      if (dayjs().day() == 5) window.location.href = vidPickedHref;
+      if (new Date().getDay() == 5) window.location.href = vidPickedHref;
 
     </script>
 
