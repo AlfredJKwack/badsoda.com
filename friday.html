@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon' />
     <meta name='robots' content='noindex, nofollow' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -18,30 +18,12 @@
     <meta name='twitter:description' content='Shows an energizing meme on Friday because you need it.' />
     <meta property='og:description' content='Shows an energizing meme on Friday because you need it.' />
 
+    <script type="text/javascript" src="arrVidFiles.js"></script>
     <script type="text/javascript">
       /*
       Where are your video files located and what are their filenames.
        */
       const vidDir = 'video/';
-      const vidFiles = [
-         'Friday-01.mp4'
-        ,'Friday-02.mp4'
-        ,'Friday-03.mp4'
-        ,'Friday-04.mp4'
-        ,'Friday-05.mp4'
-        ,'Friday-06.mp4'
-        ,'Friday-07.mp4'
-        ,'Friday-08.webm'
-        ,'Friday-09.webm'
-        ,'Friday-10.webm'
-        ,'Friday-11.webm'
-        ,'Friday-12.webm'
-        ,'Friday-13.mp4'
-        ,'Friday-14.mp4'
-        ,'Friday-15.webm'
-        ,'Friday-16.webm'
-        ,'Friday-17.webm'
-      ];
 
       /**
        * Gets the week number for a given date. Defaults to today.
@@ -60,6 +42,7 @@
 
       /*
       Pick one of the videos in the array based on the current week number.
+      the vidFiles array is loaded separately, from arrVidFiles.js.
        */
       let vidPickedHref = vidDir + vidFiles[ getWeekNum() % vidFiles.length ];
 
