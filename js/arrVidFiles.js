@@ -16,4 +16,5 @@ const vidFiles = [
 	,'Friday-15.webm'
 	,'Friday-16.webm'
 	,'Friday-17.webm'
+	,'Friday-18.mp4'
 ];

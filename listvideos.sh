@@ -16,4 +16,4 @@ ls -1 video | awk '
         }
     }
     END{print "];"}
-' > arrVidFiles.js
+' > js/arrVidFiles.js
