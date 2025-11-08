@@ -3,7 +3,27 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Three.js Shader Demo (GLSL 300)</title>
+<title>BadSoda</title>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon' />
+<meta name='robots' content='noindex, nofollow' />
+<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<meta name='twitter:site' content='BadSoda'>
+<meta property='og:site_name' content='BadSoda' />
+<meta name='twitter:url' content='http://badsoda.com/' />
+<meta property='og:url' content='http://badsoda.com/'>
+<meta name='twitter:title' content='BadSoda' />
+<meta property='og:title' content='BadSoda' />
+<meta name='twitter:description' content="Clearly it ain't a good soda." />
+<meta property='og:description' content="Clearly it ain't a good soda." />
+<meta name='twitter:image:width' content='512'>
+<meta name='twitter:image:height' content='512'>
+<meta property='og:image:width' content='512'>
+<meta property='og:image:height' content='5125'>
+<meta name='twitter:card' content='summary_large_image'>
+<meta property='og:type' content='website' />
+<base target='_parent' />
+<link href='css/style.css' rel='stylesheet' />
 <style>
   html, body { margin: 0; padding: 0; overflow: hidden; background: #000; }
   canvas { display: block; width: 100%; height: 100%; }
@@ -11,6 +31,32 @@
 </style>
 </head>
 <body>
+    <div id='splash-logo'>
+        <svg viewBox="0 0 800 600">
+            <g class="logo-top">
+                <!--
+                    Credit to Yoksel for the inspiring SVG and CSS work
+                    https://codepen.io/yoksel/
+                  -->
+                <symbol id="s-text">
+                    <text text-anchor="middle" x="50%" y="35%" class="text--line">
+                        Bad
+                    </text>
+                    <text text-anchor="middle" x="50%" y="68%" class="text--line2">
+                        Soda
+                    </text>
+                </symbol>
+                <g class="g-ants">
+                    <use href="#s-text" class="text-copy"></use>
+                    <use href="#s-text" class="text-copy"></use>
+                    <use href="#s-text" class="text-copy"></use>
+                    <use href="#s-text" class="text-copy"></use>
+                    <use href="#s-text" class="text-copy"></use>
+                </g>
+            </g>
+        </svg>
+
+    </div>  
 <canvas id="canvas"></canvas>
 <div id="error">WebGL2 not supported</div>
 
@@ -62,7 +108,7 @@ const fragmentShader = `
 precision highp float;
 in vec2 vUv;
 out vec4 fragColor;
-uniform float t;        // time in seconds
+uniform float t;       // time in seconds
 uniform vec2 r;        // resolution (pixels)
 uniform float steps;   // dynamic raymarch steps (float, used as int)
 
@@ -72,7 +118,8 @@ uniform float steps;   // dynamic raymarch steps (float, used as int)
 #define OPACITY 0.1
 #define PERSPECTIVE 1.0
 #define Z_SPEED 0.7
-#define TWIST 0.3
+
+uniform float twist;
 
 // maximum loop iterations (compile-time upper bound)
 const int MAX_STEPS = 200;
@@ -94,7 +141,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 
         vec3 p = z * dir;
         p.z -= Z_SPEED * t;
-        float angle = p.z * TWIST;
+        float angle = p.z * twist;
         p.xy *= mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
         vec3 v = cos(p + sin(p.yzx / 0.3));
         d = length(max(v, v.zxy * OPACITY)) / 6.0;
@@ -118,7 +165,8 @@ const material = new THREE.ShaderMaterial({
   uniforms: { 
     t: { value: 0 },
     steps: { value: 100.0 },  // dynamic raymarch steps (adjusted by controller)
-    r: { value: new THREE.Vector2() } 
+    r: { value: new THREE.Vector2() },
+    twist: { value: 0.5 }      // dynamic twist value (varies between 0.1 and 0.9)
   },
   vertexShader,
   fragmentShader,
@@ -221,7 +269,13 @@ const controllerId = setInterval(controllerTick, controllerIntervalMs);
 
 // Animation loop
 function animate(time) {
-  material.uniforms.t.value = time * 0.001; // Convert to seconds
+  const seconds = time * 0.001; // Convert to seconds
+  material.uniforms.t.value = seconds;
+  
+  // Vary twist between 0.1 and 0.9 over 9 seconds using sine wave
+  // Formula: 0.5 + 0.4 * sin(2π * t / 9) gives range [0.1, 0.9]
+  material.uniforms.twist.value = 0.5 + 0.4 * Math.sin((seconds * 2.0 * Math.PI) / 9.0);
+  
   renderer.render(scene, camera);
   requestAnimationFrame(animateWithFps);
 }

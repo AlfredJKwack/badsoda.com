@@ -29,32 +29,32 @@ svg {
   stroke-width: 3px;
 }
 .text-copy:nth-child(1) {
-  -webkit-animation: stroke-offset1 9s infinite linear forwards;
-          animation: stroke-offset1 9s infinite linear forwards;
+  -webkit-animation: stroke-offset1 9s infinite ease-out forwards;
+          animation: stroke-offset1 9s infinite ease-out forwards;
   stroke: #360745;
   stroke-dashoffset: 7%;
 }
 .text-copy:nth-child(2) {
-  -webkit-animation: stroke-offset2 9s infinite linear forwards;
-          animation: stroke-offset2 9s infinite linear forwards;
+  -webkit-animation: stroke-offset2 9s infinite ease-out forwards;
+          animation: stroke-offset2 9s infinite ease-out forwards;
   stroke: #D61C59;
   stroke-dashoffset: 14%;
 }
 .text-copy:nth-child(3) {
-  -webkit-animation: stroke-offset3 9s infinite linear forwards;
-          animation: stroke-offset3 9s infinite linear forwards;
+  -webkit-animation: stroke-offset3 9s infinite ease-out forwards;
+          animation: stroke-offset3 9s infinite ease-out forwards;
   stroke: #E7D84B;
   stroke-dashoffset: 21%;
 }
 .text-copy:nth-child(4) {
-  -webkit-animation: stroke-offset4 9s infinite linear forwards;
-          animation: stroke-offset4 9s infinite linear forwards;
+  -webkit-animation: stroke-offset4 9s infinite ease-out forwards;
+          animation: stroke-offset4 9s infinite ease-out forwards;
   stroke: #EFEAC5;
   stroke-dashoffset: 28%;
 }
 .text-copy:nth-child(5) {
-  -webkit-animation: stroke-offset5 9s infinite linear forwards;
-          animation: stroke-offset5 9s infinite linear forwards;
+  -webkit-animation: stroke-offset5 9s infinite ease-out forwards;
+          animation: stroke-offset5 9s infinite ease-out forwards;
   stroke: #1B8798;
   stroke-dashoffset: 35%;
 }
