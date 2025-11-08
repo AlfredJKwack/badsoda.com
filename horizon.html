@@ -39,7 +39,7 @@ try {
 
 // Performance settings
 const maxDpr = 2;               // Clamp DPR for performance (1 = standard, 2 = retina)
-const renderScale = 0.5;        // Render resolution scale (0.5 = half-res, 1.0 = full-res)
+let renderScale = 0.5;          // Render resolution scale (mutable, adjusted by controller)
 
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
 
@@ -56,7 +56,8 @@ void main() {
   gl_Position = vec4(position, 1.0);
 }`;
 
-// Fragment shader (GLSL 300) - user's shader code
+// Fragment shader (GLSL 300)
+// Original shader snippet adapted form https://www.xordev.com/
 const fragmentShader = `
 precision highp float;
 in vec2 vUv;
@@ -142,13 +143,66 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
+// Adaptive resolution controller (proportional control, 1s interval)
+const targetFPS = 60;
+const minScale = 0.3;
+const maxScale = 1.0;
+const Kp = 0.002;           // proportional gain (tweakable)
+const applyAlpha = 0.15;    // smoothing applied when updating renderScale
+const epsilon = 0.01;       // minimal change to apply resize
+const controllerIntervalMs = 1000;
+
+// EMA for FPS
+let fpsEMA = targetFPS;
+let lastFrameTime = performance.now();
+
+function updateFpsEstimate(now) {
+  const instantDelta = now - lastFrameTime;
+  lastFrameTime = now;
+  if (instantDelta <= 0) return;
+  const instantFps = 1000 / instantDelta;
+  // smooth factor for EMA: gives more weight to recent FPS, tweak if needed
+  const fpsAlpha = 0.08;
+  fpsEMA = fpsEMA * (1.0 - fpsAlpha) + instantFps * fpsAlpha;
+}
+
+// Controller tick: run once per second
+function controllerTick() {
+  const measured = fpsEMA;
+  const error = measured - targetFPS;     // positive when we have spare capacity
+  const delta = Kp * error;
+  let candidate = renderScale + delta;
+  // clamp
+  candidate = Math.max(minScale, Math.min(maxScale, candidate));
+  // smooth the applied change
+  const newScale = renderScale * (1.0 - applyAlpha) + candidate * applyAlpha;
+  // apply only if change is meaningful
+  if (Math.abs(newScale - renderScale) > epsilon) {
+    renderScale = newScale;
+    // call resize to update internal buffer and shader uniform
+    resize();
+    // optional: log for debugging (remove/comment out in production)
+    console.log(`Adaptive renderScale -> ${renderScale.toFixed(3)} (measured FPS ${measured.toFixed(1)})`);
+  }
+}
+
+// Start controller interval
+const controllerId = setInterval(controllerTick, controllerIntervalMs);
+
 // Animation loop
 function animate(time) {
   material.uniforms.t.value = time * 0.001; // Convert to seconds
   renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateWithFps);
 }
-requestAnimationFrame(animate);
+
+// Wrapper to update FPS estimate each frame
+function animateWithFps(time) {
+  updateFpsEstimate(time);
+  animate(time);
+}
+
+requestAnimationFrame(animateWithFps);
 </script>
 </body>
 </html>
