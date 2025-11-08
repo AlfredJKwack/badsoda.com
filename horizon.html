@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Three.js Shader Demo (GLSL 300)</title>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #000; }
+  canvas { display: block; width: 100%; height: 100%; }
+  #error { display: none; color: #fff; font-family: monospace; padding: 20px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="error">WebGL2 not supported</div>
+
+<script type="module">
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+const canvas = document.getElementById('canvas');
+const errorDiv = document.getElementById('error');
+
+// Try to create WebGL2 renderer
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ 
+    canvas, 
+    context: canvas.getContext('webgl2'),
+    antialias: false 
+  });
+  if (!renderer.capabilities.isWebGL2) {
+    throw new Error('WebGL2 not available');
+  }
+} catch (e) {
+  console.error('WebGL2 initialization failed:', e);
+  errorDiv.style.display = 'block';
+  throw e;
+}
+
+// Performance settings
+const maxDpr = 2;               // Clamp DPR for performance (1 = standard, 2 = retina)
+const renderScale = 0.5;        // Render resolution scale (0.5 = half-res, 1.0 = full-res)
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
+
+// Scene and camera
+const scene = new THREE.Scene();
+const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+// Vertex shader (GLSL 300)
+const vertexShader = `
+out vec2 vUv;
+
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position, 1.0);
+}`;
+
+// Fragment shader (GLSL 300) - user's shader code
+const fragmentShader = `
+precision highp float;
+in vec2 vUv;
+out vec4 fragColor;
+uniform float t;
+uniform vec2 r;
+
+// Helper: tanh for vec4 (GLSL ES 3.00 doesn't have it built-in)
+vec4 tanh4(vec4 x) {
+  vec4 e1 = exp(x);
+  vec4 e2 = exp(-x);
+  return (e1 - e2) / (e1 + e2);
+}
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord)
+{
+    // Normalize coordinates to range [-1,1]
+    vec2 uv = (fragCoord - 0.4 * r.xy) / r.y;
+
+    // Setup aliases used by the minified code
+    vec3 FC = vec3(uv, 0.0);              // fragment coordinate or direction
+    vec3 iResolution = vec3(r.xy, r.y);
+    float iTime = t;                      // animation time
+    vec4 o  = vec4(0.0);                  // output accumulator
+
+    // === Begin shader snippet ===
+    vec3 p;
+    FC *= 2500.3;
+    for(float i, z, d; i++ < 1e2; o += (sin(p.x + iTime + vec4(0,2,3,0)) + 1.) / d)
+    {
+        p = z * normalize(FC.rgb * 2. - iResolution.xyy);
+        p.z -= iTime;
+        p.xy *= mat2(cos(z * .2 + iTime * .1 + vec4(0,33,11,0)));
+        z += d = length(cos(p + cos(p.yzx + p.z - iTime * .2)).xy) / 6.;
+    }
+    o = tanh4(o / 5e3);
+    // === End shader snippet ===
+
+    fragColor = o;
+}
+
+void main() {
+  vec2 fragCoord = vUv * r;
+  mainImage(fragColor, fragCoord);
+}`;
+
+// Create shader material
+const material = new THREE.ShaderMaterial({
+  uniforms: { 
+    t: { value: 0 }, 
+    r: { value: new THREE.Vector2() } 
+  },
+  vertexShader,
+  fragmentShader,
+  glslVersion: THREE.GLSL3
+});
+
+// Create fullscreen plane
+const geometry = new THREE.PlaneGeometry(2, 2);
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+
+// Handle resize
+function resize() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  // Calculate scaled render buffer size
+  const renderWidth = Math.max(1, Math.floor(width * renderScale));
+  const renderHeight = Math.max(1, Math.floor(height * renderScale));
+  
+  // Set internal drawing buffer to scaled size, but don't update CSS size yet
+  renderer.setSize(renderWidth, renderHeight, false);
+  
+  // Manually set canvas CSS to full window size
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+  
+  // Update resolution uniform with actual render buffer size in device pixels
+  const dpr = renderer.getPixelRatio();
+  material.uniforms.r.value.set(renderWidth * dpr, renderHeight * dpr);
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Animation loop
+function animate(time) {
+  material.uniforms.t.value = time * 0.001; // Convert to seconds
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>
