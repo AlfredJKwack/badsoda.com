@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJI HD 5” Quad For Sale</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="hero">
+        <div class="hero-text">
+            <h1>Te koop: DJI HD 5” quad – DC5 – 6S – GPS – beeper</h1>
+            <p>5 inch DJI HD quad te koop, complete build, netjes en weinig gebruikt.</p>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <!-- Product Description -->
+        <section class="description">
+            <h2>Product Details</h2>
+            <ul>
+                <li><strong>Frame:</strong> iFlight DC5 HD</li>
+                <li><strong>Motors:</strong> 4× T-Motor F60 Pro IV 1750KV</li>
+                <li><strong>Electronics:</strong> iFlight SucceX-D F7 V2.1 + 50A ESC</li>
+                <li><strong>Camera:</strong> Original DJI Air Unit (full size) + original camera</li>
+                <li><strong>Setup:</strong> 6S, DJI-only, works with DJI FPV Remote Controller</li>
+                <li><strong>Additional:</strong> GPS: 1590R-C W, Built-in beeper</li>
+                <li><strong>Price:</strong> €469 OBO</li>
+            </ul>
+        </section>        
+
+        <!-- Gallery Section -->
+        <section class="gallery">
+            <h2>Gallery</h2>
+            <div class="gallery-grid">
+                <img src="IMG_2380.jpg" alt="DJI HD quad view 1">
+                <img src="IMG_2382.jpg" alt="DJI HD quad view 2">
+                <img src="IMG_2383.jpg" alt="DJI HD quad view 3">
+                <img src="IMG_2384.jpg" alt="DJI HD quad view 4">
+                <img src="IMG_2385.jpg" alt="DJI HD quad view 5">
+                <img src="IMG_2386.jpg" alt="DJI HD quad view 6">
+                <img src="IMG_2387.jpg" alt="DJI HD quad view 7">
+                <img src="IMG_2389.jpg" alt="DJI HD quad view 8">
+                <img src="IMG_2390.jpg" alt="DJI HD quad view 9">
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section class="video">
+            <h2>Video opname</h2>
+            <p><strong>Source:</strong>DJI Air Unit</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="DC5-On-board-sample.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <section class="description">
+            <h2>Staat</h2>
+            <ul>
+                <li><strong>Aangekocht:</strong> 2020</li>
+                <li><strong>vuchten:</strong> ±24 </li>
+                <li><strong>Piloot gedrag:</strong> Geen harde crashes, alleen gras</li>
+                <li><strong>Wat je kan verwachten:</strong> Alles werkt zoals het hoort, kijk wel even naar de setup :-)</li>
+                <li>Inclusief: Alleen de drone, geen extra's, geen zender, geen accu’s</li>
+            </ul>
+        </section>        
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>Serieuze biedingen welkom, onzinbiedingen worden genegeerd.</p>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage" alt="Full-size view">
+    </div>
+
+    <script>
+        // Get modal elements
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.querySelector('.modal-close');
+        const galleryImages = document.querySelectorAll('.gallery-grid img');
+
+        // Add click event to all gallery images
+        galleryImages.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                modalImg.src = this.src;
+                modalImg.alt = this.alt;
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
+
+        // Close modal when clicking the close button
+        closeBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+    </script>
+</body>
+</html>
